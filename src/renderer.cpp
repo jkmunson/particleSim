@@ -4,7 +4,7 @@ Renderer::Renderer(Config &config)
 {
 	if(!this->rendererCount) 
 	{
-			SDL_Init(SDL_INIT_VIDEO);
+			if(SDL_Init(SDL_INIT_VIDEO));
 	
 }
 
