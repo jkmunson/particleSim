@@ -1,18 +1,46 @@
 #include <renderer.h>
 
+int Renderer::count = 0; //Has to be initialized here, instead of header.
+
 Renderer::Renderer(Config &config)
 {
-	if(!this->rendererCount) 
+	//In case more than one renderer is ever created
+	if(!this->count) 
 	{
-			if(SDL_Init(SDL_INIT_VIDEO));
+		if(SDL_Init(SDL_INIT_VIDEO) < 0) SDL_ERROR_EXIT();
+		if(IMG_Init(IMG_INIT_PNG)   < 0) IMG_ERROR_EXIT();
+	}
+	this->count++;
+	if(	SDL_CreateWindowAndRenderer(
+		config.video.windowWidth, 
+		config.video.windowHeight, 
+		config.video.windowType | SDL_WINDOW_SHOWN, 
+		&this->window, 
+		&this->renderer)
+	) SDL_ERROR_EXIT();
+	
+	this->surface = SDL_GetWindowSurface(this->window);
+	
+	{
+		SDL_Surface *temp = IMG_Load("data/img/splash.png");
+		if(!temp) IMG_ERROR_EXIT();
+		this->splash = SDL_ConvertSurface(temp, this->surface->format, 0);
+		if(!this->splash) SDL_ERROR_EXIT();
+		SDL_FreeSurface(temp);
+	}
+	this->windowArea.x = 0;
+	this->windowArea.y = 0;
+	this->windowArea.w = config.video.windowWidth;
+	this->windowArea.h = config.video.windowHeight;
+	//TODO: Spawn Rendering Thread
 	
 }
 
 Renderer::~Renderer()
 {
-	
+	//TODO: Cleanup!
 }
-
+/*
 #include "SDL.h"
 
 int main(int argc, char *argv[])
@@ -64,3 +92,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+*/
