@@ -16,7 +16,7 @@ class Config
 		//!No flag = windowed. Could also be SDL_WINDOW_BORDERLESS, SDL_WINDOW_FULLSCREEN etc
 		uint32_t windowType = 0;
 		uint32_t windowWidth = 1200;
-		uint32_t windowHeight = 775;
+		uint32_t windowHeight = 675;
 	};
 	Video video;
 	
