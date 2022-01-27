@@ -21,8 +21,10 @@ Renderer::Renderer(Config &config)
 	
 	this->surface = SDL_GetWindowSurface(this->window);
 	
+	SDL_SetWindowTitle(this->window, "ParticleSim");
+	
 	{
-		SDL_Surface *temp = IMG_Load("data/img/splash.png");
+		SDL_Surface *temp = IMG_Load("data/img/splash2.png");
 		if(!temp) IMG_ERROR_EXIT();
 		this->splash = SDL_ConvertSurface(temp, this->surface->format, 0);
 		if(!this->splash) SDL_ERROR_EXIT();

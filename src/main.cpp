@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 		{
 			quit = (event.type == SDL_QUIT);
 		}
-		SDL_BlitScaled(renderer.splash, &renderer.windowArea, renderer.surface, &renderer.windowArea);
+		SDL_BlitScaled(renderer.splash, NULL, renderer.surface, &renderer.windowArea);
 		SDL_UpdateWindowSurface(renderer.window);
 		SDL_Delay(10);
 	}
