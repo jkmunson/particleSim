@@ -13,7 +13,7 @@ class Config
 	struct Video
 	{
 		//see https://wiki.libsdl.org/SDL_WindowFlags
-		//!No flag = windowed. Could also be SDL_WINDOW_BORDERLESS, SDL_WINDOW_FULLSCREEN etc
+		//!No flag = windowed. Could also be SDL_WINDOW_BORDERLESS, SDL_WINDOW_FULLSCREEN etc. Should | in SDL_WINDOW_INPUT_GRABBED for fullscreen.
 		uint32_t windowType = 0;
 		uint32_t windowWidth = 1200;
 		uint32_t windowHeight = 675;
@@ -22,7 +22,8 @@ class Config
 	
 	bool silent = false;
 	
-	Config(int argc, char **argv);
+	//FIXME: Use default constructor, implement a config loading method. NOTHING GUARENTEED TO BE INITIALIZED CURRENTLY
+	explicit Config(int argc, char **argv);
 	~Config();
 	void readArgs(int argc, char **argv, bool silent);
 	

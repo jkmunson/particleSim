@@ -17,7 +17,7 @@ void Config::readArgs(int argc, char **argv, bool silent)
 		if(!strcmp(argv[i], "-noconfig")) 
 		{
 			this->noconfig = true;
-			if(!silent) printf("Skipping config file loading - Using defaults. NO SETTING CHANGES WILL BE SAVED\n");
+			if(!silent) printf("Skipping config file loading - Using defaults. NO SETTING CHANGES WILL BE SAVED.\n");
 		}
 		
 		if(!strcmp(argv[i], "-help") || !strcmp(argv[i], "help") || !strcmp(argv[i], "-?"))
@@ -26,7 +26,7 @@ void Config::readArgs(int argc, char **argv, bool silent)
 				"-help",
 				"-noconfig | skips loading the configuration file",
 				"-altconfig (path/to/config/file) | Loads and uses an alternate configuration file");
-				exit(0);
+			exit(0);
 		}
 		
 	//TODO: Process all arguments
@@ -34,5 +34,5 @@ void Config::readArgs(int argc, char **argv, bool silent)
 }
  Config::~Config()
  {
-	 //TODO: Write back config file.
+	 //STUB: Write back config file.
  }

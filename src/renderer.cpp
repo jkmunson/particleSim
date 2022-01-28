@@ -11,36 +11,51 @@ Renderer::Renderer(Config &config)
 		if(IMG_Init(IMG_INIT_PNG)   < 0) IMG_ERROR_EXIT();
 	}
 	this->count++;
-	if(	SDL_CreateWindowAndRenderer(
-		config.video.windowWidth, 
-		config.video.windowHeight, 
-		config.video.windowType | SDL_WINDOW_SHOWN, 
-		&this->window, 
-		&this->renderer)
-	) SDL_ERROR_EXIT();
 	
-	this->surface = SDL_GetWindowSurface(this->window);
+	this->window =	SDL_CreateWindow("ParticleSim", 
+					SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+					config.video.windowWidth, config.video.windowHeight,
+					config.video.windowType | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+	if(!window) SDL_ERROR_EXIT();
 	
-	SDL_SetWindowTitle(this->window, "ParticleSim");
+	renderer = SDL_CreateRenderer(window, -1, 
+	SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+	if(!window) SDL_ERROR_EXIT();
 	
-	{
-		SDL_Surface *temp = IMG_Load("data/img/splash2.png");
-		if(!temp) IMG_ERROR_EXIT();
-		this->splash = SDL_ConvertSurface(temp, this->surface->format, 0);
-		if(!this->splash) SDL_ERROR_EXIT();
-		SDL_FreeSurface(temp);
-	}
-	this->windowArea.x = 0;
-	this->windowArea.y = 0;
-	this->windowArea.w = config.video.windowWidth;
-	this->windowArea.h = config.video.windowHeight;
-	//TODO: Spawn Rendering Thread
+	//surface = SDL_GetWindowSurface(window);
 	
+	windowArea.x = 0;
+	windowArea.y = 0;
+	windowArea.w = config.video.windowWidth;
+	windowArea.h = config.video.windowHeight;
 }
 
 Renderer::~Renderer()
 {
-	//TODO: Cleanup!
+	//FIXME: Cleanup!
+}
+
+void Renderer::drawScene(std::stack<Sprite*> &renderingStack)
+{
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
+	SDL_RenderClear(renderer);
+	
+	while(!renderingStack.empty())
+	{
+		SDL_SetRenderDrawBlendMode(renderer, renderingStack.top()->blending);
+		renderingStack.top()->draw(renderer);
+		delete renderingStack.top();
+		renderingStack.pop();
+		if(renderingStack.empty()) break;
+	}
+}
+
+void Renderer::swapFrameBuffer(void)
+{
+	//TODO: Wait for vsync, or otherwise time it.
+	//SDL_Delay(5);//TEMPORARY
+	SDL_RenderPresent(this->renderer);
+	return;
 }
 /*
 #include "SDL.h"

@@ -6,7 +6,10 @@ int main(int argc, char** argv)
 	
 	Config config(argc, argv);
 	Renderer renderer(config);
+	Context context(config, renderer, NULL);
 	
+	
+	Uint64 last = SDL_GetTicks64();
 	bool quit = false;
 	SDL_Event event;
 	while(!quit) {
@@ -14,9 +17,10 @@ int main(int argc, char** argv)
 		{
 			quit = (event.type == SDL_QUIT);
 		}
-		SDL_BlitScaled(renderer.splash, NULL, renderer.surface, &renderer.windowArea);
-		SDL_UpdateWindowSurface(renderer.window);
-		SDL_Delay(10);
+		context.run();
+		
+		std::cout << "FrameTime(ms):" << (SDL_GetTicks64() - last) <<"\n";
+		last = SDL_GetTicks64();
 	}
 	
 	return 0;

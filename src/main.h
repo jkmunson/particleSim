@@ -5,3 +5,4 @@
 
 #include <renderer.h>
 #include <config.h>
+#include <context.h>

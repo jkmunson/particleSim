@@ -1,5 +1,5 @@
 linker_flags := -lSDL2 -lSDL2_image -Isrc/
-compiler_flags := -march=native -Wpedantic -Wall -Wextra -Wsuggest-attribute=const -std=c++17 -O2
+compiler_flags := -march=native -Wpedantic -Wall -Wextra -Wsuggest-attribute=const -std=c++17 -Ofast
 
 all: doxygen build
 
@@ -17,4 +17,5 @@ valgrind:
 #TODO: Get Valgrind set up
 build:
 	g++ src/*.cpp -o bin/particleSim $(linker_flags) $(compiler_flags)
+	cp ./bin/particleSim ./particleSim
 

@@ -1,0 +1,9 @@
+Throughout the code there are comments that indicate types of tasks that need to be completed. (I'm just one person, so opening an issue on github would be way more work than it's worth)
+The intention of these comment markers is that they should be removed before I consider the project "done"
+
+The markers used are:
+
+FIXME: Something that is either currently broken, or badly needs to be written to function properly
+TODO: Something that needs done or considered more thoroughly/completely
+STUB: Something that needs to be written
+HARDCODED: May or may not be moved elsewhere, helps find magic values.
