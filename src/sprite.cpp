@@ -1,6 +1,5 @@
 #include <sprite.h>
 #include <iostream>
-volatile int hi = 0;
 
 //######## BASE CLASS
 Sprite::Sprite(SDL_BlendMode blendMode)
@@ -33,8 +32,7 @@ Nothing::~Nothing()
 void Nothing::draw(SDL_Renderer *renderer)
 {
 	(void)(renderer); //suppress unused warning - draw still needs an implementation.
-	hi++;
-	if(hi==50000000){std::cerr << renderer << "\n";hi=0;}
+
 }
 
 Nothing::Nothing(SDL_BlendMode blendMode)

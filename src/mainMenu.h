@@ -20,4 +20,6 @@ class MainMenu : public Scene
 	private:
 	SDL_Texture		*splash;
 	int height = 0;
+	int direction = 1;
+	uint8_t blue;
 };

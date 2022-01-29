@@ -1,5 +1,5 @@
-linker_flags := -lSDL2 -lSDL2_image -Isrc/
-compiler_flags := -march=native -Wpedantic -Wall -Wextra -Wsuggest-attribute=const -std=c++17 -Ofast
+linker_flags := -lSDL2 -lSDL2_image -Isrc/ -pthread -lpthread
+compiler_flags := -march=native -Wpedantic -Wall -Wextra -Wsuggest-attribute=const -std=c++2b -Ofast
 
 all: doxygen build
 

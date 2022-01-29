@@ -7,7 +7,7 @@ Renderer::Renderer(Config &config)
 	//In case more than one renderer is ever created
 	if(!this->count) 
 	{
-		if(SDL_Init(SDL_INIT_VIDEO) < 0) SDL_ERROR_EXIT();
+		if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) SDL_ERROR_EXIT();
 		if(IMG_Init(IMG_INIT_PNG)   < 0) IMG_ERROR_EXIT();
 	}
 	this->count++;

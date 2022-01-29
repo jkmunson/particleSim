@@ -24,8 +24,23 @@ Context::~Context()
 
 void Context::run(void)
 {
-	activeScene.top()->populateRenderingStack(renderingStack);
-	rendererRef.drawScene(renderingStack);
-	rendererRef.swapFrameBuffer();
-	activeScene.top()->updateInternalState();
+	std::thread sceneThread([&](){activeScene.top()->run();}); //Lambda syntax already sucks.
+	
+	//Uint64 last = SDL_GetTicks64();
+	bool quit = false;
+	SDL_Event event;
+	while(!quit) {
+		while(SDL_PollEvent(&event))
+		{
+			quit = (event.type == SDL_QUIT);
+		}
+		activeScene.top()->getRenderingStack(renderingStack);
+		rendererRef.drawScene(renderingStack);
+		rendererRef.swapFrameBuffer();
+		
+		//std::cout << "FrameTime(ms):" << (SDL_GetTicks64() - last) <<"\n";
+		//last = SDL_GetTicks64();
+	}
+	activeScene.top()->stop = true;
+	sceneThread.join();
 }
