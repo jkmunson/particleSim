@@ -25,6 +25,10 @@ void MainMenu::populateRenderingStack(std::stack<Sprite *> &renderingStack)
 	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{250,blue,blue,255}, 0, height+blue, rendererRef.windowArea.w-2 , height+1) );
 	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{250,blue,blue,255}, 0, height-255+blue, rendererRef.windowArea.w-2 , height-1) );
 	
+	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{100,250,blue,255}, height, 0, height , rendererRef.windowArea.h-2) );
+	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{250,blue,blue,255}, height, 0+blue, rendererRef.windowArea.h-2 , rendererRef.windowArea.h-2) );
+	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{250,blue,blue,255}, height, 0-255+blue, rendererRef.windowArea.h-2 , rendererRef.windowArea.h-2) );
+	
 	renderingStack.push( new Background( SDL_BLENDMODE_NONE, splash) );
 	
 }
