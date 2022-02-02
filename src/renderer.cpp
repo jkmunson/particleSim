@@ -12,13 +12,11 @@ Renderer::Renderer(const char *windowName, Config &config)
 	}
 	count++;
 	
-	//HARDCODED: Maybe renderer should take a window name as an arg.
 	window =	SDL_CreateWindow(windowName, 
 					SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 					config.video.windowWidth, config.video.windowHeight,
 					config.video.windowType | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	if(!window) SDL_ERROR_EXIT();
-	
 	renderer = SDL_CreateRenderer(window, -1, 
 	SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
 	if(!window) SDL_ERROR_EXIT();
@@ -32,7 +30,7 @@ Renderer::Renderer(const char *windowName, Config &config)
 Renderer::~Renderer()
 {
 	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	SDL_DestroyWindow(window); //MYSTERY: Commenting out this line doesn't upset valgrind.
 	
 	count--;
 	if(!count) {

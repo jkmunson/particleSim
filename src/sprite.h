@@ -30,6 +30,13 @@ class Sprite
 
 };
 
+class Nothing : public Sprite
+{
+	public:
+	explicit Nothing(SDL_BlendMode blendMode);
+	virtual ~Nothing();
+	virtual void draw(SDL_Renderer *renderer) override;
+};
 
 class Background : public Sprite
 {
@@ -42,14 +49,6 @@ class Background : public Sprite
 	virtual void draw(SDL_Renderer *renderer) override;
 };
 
-class Nothing : public Sprite
-{
-	public:
-	explicit Nothing(SDL_BlendMode blendMode);
-	virtual ~Nothing();
-	virtual void draw(SDL_Renderer *renderer) override;
-};
-
 class Line : public Sprite
 {
 	public:
@@ -59,6 +58,18 @@ class Line : public Sprite
 	
 	Color color;
 	int x1, y1, x2, y2;
+	
+};
+
+class Box : public Sprite
+{
+	public:
+	explicit Box(SDL_BlendMode blendMode, Color c, int X, int Y, int width, int height);
+	virtual ~Box();
+	virtual void draw(SDL_Renderer *renderer) override;
+	
+	Color color;
+	SDL_Rect rect;
 	
 };
 

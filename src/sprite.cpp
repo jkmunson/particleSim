@@ -53,3 +53,16 @@ void Line::draw(SDL_Renderer *renderer)
 	SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 }
 
+//######## Box
+Box::Box(SDL_BlendMode blendMode, Color c, int X, int Y, int width, int height)
+:Sprite(blendMode), color{c}, rect{X,Y,width,height}
+{}
+
+Box::~Box()
+{}
+
+void Box::draw(SDL_Renderer *renderer)
+{
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderDrawRect(renderer, &rect);
+}

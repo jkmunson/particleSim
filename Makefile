@@ -13,10 +13,12 @@ doxygen:
 assembly:
 	g++ src/*.cpp -S $(linker_flags) $(compiler_flags) -Os
 	mv *.s asm/
-#FIXME: Can gcc be told to put the.s files there firectly?
+#FIXME: Can gcc be told to put the.s files there directly?
 valgrind:
 	g++ src/*.cpp -o bin/particleSim $(linker_flags) $(compiler_flags) -Og
-	valgrind --leak-check=full ./bin/particleSim > valgrind.txt
+	valgrind --leak-check=full --num-callers=50 --suppressions=valgrind-suppressions ./bin/particleSim > valgrind.txt
+	@rm valgrind.txt
+	@echo "There should be 319,159 bytes in use at exit\n"
 build:
 	g++ src/*.cpp -o bin/particleSim $(linker_flags) $(compiler_flags) -Os
 test:

@@ -22,4 +22,12 @@ class MainMenu : public Scene
 	int height = 0;
 	int direction = 1;
 	uint8_t blue = 0;
+	
+	struct Button {
+		char	name[30];
+		int		x,y,w,h;
+	};
+	Button startButton = {"Start",10,10,130,50};
+	bool startState = 0;
+		
 };

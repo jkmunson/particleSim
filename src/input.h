@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 #pragma once
 class Input 
 {
@@ -12,4 +9,3 @@ class Input
 		
 	};
 };
->>>>>>> 237f8add4ee76004888b9016404a077015704653
