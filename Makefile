@@ -11,14 +11,14 @@ clean:
 doxygen:
 #TODO get doxygen setup
 assembly:
-	g++ src/*.cpp -S $(linker_flags) $(compiler_flags)
+	g++ src/*.cpp -S $(linker_flags) $(compiler_flags) -Os
 	mv *.s asm/
 #FIXME: Can gcc be told to put the.s files there firectly?
 valgrind:
 	g++ src/*.cpp -o bin/particleSim $(linker_flags) $(compiler_flags) -Og
-	valgrind --leak-check=full ./bin/particleSim >> valgrind.txt
-	vi valgrind.txt
+	valgrind --leak-check=full ./bin/particleSim > valgrind.txt
 build:
-	g++ src/*.cpp -o bin/particleSim $(linker_flags) $(compiler_flags) -Ofast
+	g++ src/*.cpp -o bin/particleSim $(linker_flags) $(compiler_flags) -Os
+test:
+	g++ src/*.cpp -o bin/particleSim $(linker_flags) $(compiler_flags) -O0
 	cp ./bin/particleSim ./particleSim
-

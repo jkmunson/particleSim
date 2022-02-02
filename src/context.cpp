@@ -24,16 +24,31 @@ Context::~Context()
 
 void Context::run(void)
 {
-	std::thread sceneThread([&](){activeScene.top()->run();}); //Lambda syntax already sucks.
+	std::thread sceneThread([&](){activeScene.top()->run();}); //Lambda syntax sucks.
 	
 	//Uint64 last = SDL_GetTicks64();
-	bool quit = false;
-	SDL_Event event;
-	while(!quit) {
-		while(SDL_PollEvent(&event))
+	while(!activeScene.top()->quit) 
+	{
+		if(activeScene.top()->pushScene) 
 		{
-			quit = (event.type == SDL_QUIT);
+			activeScene.top()->stop = true;
+			sceneThread.join();
+			activeScene.push(activeScene.top()->nextScene);
+			if(flushEvents()) return;
+			std::thread sceneThread([&](){activeScene.top()->run();});
 		}
+		
+		if(activeScene.top()->popScene) 
+		{
+			activeScene.top()->stop = true;
+			sceneThread.join();
+			delete activeScene.top();
+			activeScene.pop();
+			if(activeScene.empty()) return; //This context no longer has a scene to run!
+			if(flushEvents()) return;
+			std::thread sceneThread([&](){activeScene.top()->run();});
+		}
+		
 		activeScene.top()->getRenderingStack(renderingStack);
 		rendererRef.drawScene(renderingStack);
 		rendererRef.swapFrameBuffer();
@@ -43,4 +58,15 @@ void Context::run(void)
 	}
 	activeScene.top()->stop = true;
 	sceneThread.join();
+}
+
+bool Context::flushEvents(void)
+{
+	SDL_Event event;
+	while(SDL_PollEvent(&event))
+	{
+		printf("Event: %i\n",event.type);
+		if (event.type == SDL_QUIT) return true;
+	}
+	return false;
 }
