@@ -17,20 +17,31 @@
 class Scene
 {
 	public:
+	//Access to the target renderer object is needed to create the scene - to create textures in the correct format, and get the window size etc.
 	Scene (Renderer &renderer);
 	virtual ~Scene();
 	
 	//To be called by the context at the beginning of each frame
 	void getRenderingStack(std::stack<Sprite*> &renderingStack);
 	
-	virtual void populateRenderingStack(std::stack<Sprite*> &renderingStack) = 0; //should be private
+	//To be called by the context, to run in it's own thread until stop is set.
+	void run(void);
+	bool stop = false;// Set by context, read by scene
+	
+	bool quit = false;// Sey by scene, causes program to end
+	
+	bool pushScene = false; //Set by scene, cleared by context
+	Scene *nextScene = NULL; //Set by scene, cleared by context
+	bool popScene = false; //Set by scene, cleared by context
+	
+	
+	protected:
+	virtual void populateRenderingStack(std::stack<Sprite*> &renderingStack) = 0;
 	
 	//locked and unlocked on each loop of run(), should be locked before calling populateRenderingStack
 	mutexQueue sync;
 	
 	//Runs updateInternalState, respecting simFrameDeltaMS, until stop.
-	void run(void);
-	bool stop = false;
 	
 	//Run once per simulation frame
 	virtual void updateInternalState(void) = 0; //should be private

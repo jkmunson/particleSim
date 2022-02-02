@@ -13,7 +13,7 @@
 
 class Renderer{
 	public:
-	explicit Renderer(Config &config);
+	explicit Renderer(const char *windowName, Config &config);
 	~Renderer();
 	
 	void drawScene(std::stack<Sprite *> &renderingStack);
@@ -22,8 +22,8 @@ class Renderer{
 	//TODO: Public or private...?
 	SDL_Window 		*window;
 	SDL_Renderer 	*renderer;
-	//SDL_Surface 	*surface;
-	SDL_Event 		event;
+	
+	//Would make it read only, if I could.
 	SDL_Rect 		windowArea; //public
 
 	//! If more than one window and renderer was created, this tracks how many so SDL_Quit isn't called too soon.
