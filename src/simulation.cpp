@@ -15,7 +15,7 @@ Simulation::~Simulation()
 void Simulation::populateRenderingStack(std::stack<Sprite *> &renderingStack) 
 {
 	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{250,250,250,255}, 0, height, rendererRef.windowArea.w-2 , rendererRef.windowArea.h - height) );
-	if(bodies.count>3) {
+	if(bodies.count>1) {
 		SDL_Point *p;
 		int count;
 		bodies.print(&p,&count);
@@ -35,8 +35,7 @@ void Simulation::updateInternalState(void)
 		break;
 		
 		case SDL_MOUSEBUTTONDOWN:
-			bodies.create(10,10,event.button.x*1000, event.button.y*1000, 10);
-			printf("Created!\n");
+			bodies.create(0,0,event.button.x*1000, event.button.y*1000, 5);
 		break;
 		
 		case SDL_MOUSEMOTION:
@@ -48,7 +47,7 @@ void Simulation::updateInternalState(void)
 		break;
 		}
 	}
-	if(bodies.count>20) {
+	if(bodies.count>2) {
 	bodies.accelerate();
 	bodies.move();
 	}
@@ -77,21 +76,28 @@ void Bodies::accelerate(void)
 	for(int i=0; i<cnt; i++)
 	{
 		for(int j=i+1; j<count; j++) { //Iterate over all elements further in the array, computing their pair of interractions
-			
-			int64_t x = xPosition[count] - xPosition[j];
-			int64_t y = yPosition[count] - yPosition[j];
+			printf("%i with %i\n",i, j);
+			int64_t x = xPosition[i] - xPosition[j];
+			int64_t y = yPosition[i] - yPosition[j];
+			printf("x %li y%li\n", x, y);
 			
 			int64_t rsquare = x*x + y*y;
+			printf("rsquare: %li\n", rsquare);
 			double r = std::sqrt((double)rsquare);
+			printf("r %f\n",r);
 			
 			float sin = y/r;
 			float cos = x/r;
+			printf("sin: %f cos %f \n", sin,cos);
 			
 			xVelocity[i] -= (long double)gravParameter[j]*cos;
 			yVelocity[i] -= (long double)gravParameter[j]*sin;
 			
-			xVelocity[j] -= (long double)gravParameter[i]*cos;
-			yVelocity[j] -= (long double)gravParameter[i]*sin;
+			xVelocity[j] += (long double)gravParameter[i]*cos;
+			yVelocity[j] += (long double)gravParameter[i]*sin;
+			
+			printf("xvel: %li  yvel: %li\n", xVelocity[i], yVelocity[i]);
+			//getchar();
 		}
 	}
 }
@@ -100,8 +106,9 @@ void Bodies::move(void)
 {
 	for(int i=0; i<count; i++) 
 	{
-		xPosition[count] += xVelocity[count];
-		yPosition[count] += yVelocity[count];
+		if(xPosition[i] > 2000000 || xPosition[i] < -1000000) count=0;
+		xPosition[i] += xVelocity[i];
+		yPosition[i] += yVelocity[i];
 	}
 }
 
@@ -120,8 +127,8 @@ void Bodies::print(SDL_Point ** points, int *cnt)
 	*points = (SDL_Point *)malloc(sizeof(**points)*count);
 	for(int i=0; i<count; i++)
 	{
-		(*points)[i].x = xPosition[count]/1000;
-		(*points)[i].y = yPosition[count]/1000;
+		(*points)[i].x = xPosition[i]/1000;
+		(*points)[i].y = yPosition[i]/1000;
 	}
 	*cnt = count;
 }
