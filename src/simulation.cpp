@@ -15,10 +15,12 @@ Simulation::~Simulation()
 void Simulation::populateRenderingStack(std::stack<Sprite *> &renderingStack) 
 {
 	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{250,250,250,255}, 0, height, rendererRef.windowArea.w-2 , rendererRef.windowArea.h - height) );
-	SDL_Point *p;
-	int count;
-	bodies.print(&p,&count);
-	renderingStack.push( new Points(SDL_BLENDMODE_BLEND, Color{250,250,250,255}, p, count) );
+	if(count>3) {
+		SDL_Point *p;
+		int count;
+		bodies.print(&p,&count);
+		renderingStack.push( new Points(SDL_BLENDMODE_BLEND, Color{250,250,250,255}, p, count) );
+	}
 }
 
 void Simulation::updateInternalState(void)
@@ -45,8 +47,10 @@ void Simulation::updateInternalState(void)
 		break;
 		}
 	}
+	if(count>3) {
 	bodies.accelerate();
 	bodies.move();
+	}
 	
 	height += direction;
 	if((height > (rendererRef.windowArea.h - 2)) || height < 0) direction = (-1)*direction;
