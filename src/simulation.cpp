@@ -35,7 +35,7 @@ void Simulation::updateInternalState(void)
 		break;
 		
 		case SDL_MOUSEBUTTONDOWN:
-			bodies.create(100,100,event.button.x*1000, event.button.y*1000, 100);
+			bodies.create(10,10,event.button.x*1000, event.button.y*1000, 10);
 			printf("Created!\n");
 		break;
 		
@@ -48,7 +48,7 @@ void Simulation::updateInternalState(void)
 		break;
 		}
 	}
-	if(bodies.count>3) {
+	if(bodies.count>20) {
 	bodies.accelerate();
 	bodies.move();
 	}
