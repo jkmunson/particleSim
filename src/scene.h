@@ -1,6 +1,4 @@
 #pragma once
-
-//A Scene should contain information about: Public: 1. Objects to be rendered, 2. Callbacks for objects that accept input?, Private: 3. Any state internal to the scene, IE the simulation
 //A scene will be "worked on" twice each frame, ie [pre-rendering(Take input?)] -> [concurrent to rendering] where the rendering list will be locked - a good time to perform simulation integration!
 #include <sprite.h>
 #include <renderer.h>
@@ -34,6 +32,7 @@ class Scene
 	Scene *nextScene = NULL; //Set by scene, cleared by context
 	bool popScene = false; //Set by scene, cleared by context
 	
+	bool issim = false;
 	
 	protected:
 	virtual void populateRenderingStack(std::stack<Sprite*> &renderingStack) = 0;

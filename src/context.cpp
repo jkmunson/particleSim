@@ -33,11 +33,15 @@ void Context::run(void)
 		{
 			activeScene.top()->stop = true;
 			sceneThread.join();
-			activeScene.push(activeScene.top()->nextScene);
+			activeScene.top()->pushScene = false;
+			Scene *temp = activeScene.top()->nextScene;
+			activeScene.top()->nextScene = NULL;
+			activeScene.push(temp);
 			if(flushEvents()) return;
 			std::thread sceneThread([&](){activeScene.top()->run();});
+			printf("Scene Pushed\n");
+			while(1);
 		}
-		
 		if(activeScene.top()->popScene) 
 		{
 			activeScene.top()->stop = true;
@@ -48,8 +52,11 @@ void Context::run(void)
 			if(flushEvents()) return;
 			std::thread sceneThread([&](){activeScene.top()->run();});
 		}
-		
+		while(activeScene.top()->issim){};
+		printf("getting rendering stack\n");
+		std::cout << std::flush;
 		activeScene.top()->getRenderingStack(renderingStack);
+		printf("Here\n got rendering stack\n");
 		rendererRef.drawScene(renderingStack);
 		rendererRef.swapFrameBuffer();
 		
@@ -65,7 +72,7 @@ bool Context::flushEvents(void)
 	SDL_Event event;
 	while(SDL_PollEvent(&event))
 	{
-		printf("Event: %i\n",event.type);
+		printf("Event: %i flushed.\n",event.type);
 		if (event.type == SDL_QUIT) return true;
 	}
 	return false;

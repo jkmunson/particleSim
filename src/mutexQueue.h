@@ -4,7 +4,7 @@
 #include <deque>
 #include <atomic>
 
-//!A mutex where threads queue up for access - Giving a more fair access to the resource
+//!A mutex where threads queue up for access - Giving a more fair access to the resource.
 class mutexQueue 
 {
 	public:

@@ -32,6 +32,11 @@ void MainMenu::populateRenderingStack(std::stack<Sprite *> &renderingStack)
 }
 void MainMenu::updateInternalState(void)
 {
+	if(startState && !nextScene) //The context clears nextScene. The current scene might not end for some frames.
+	{
+		nextScene = new Simulation(rendererRef);
+		pushScene = true;
+	}
 	SDL_Event event;
 	while(SDL_PollEvent(&event))
 	{

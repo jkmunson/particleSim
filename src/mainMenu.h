@@ -5,6 +5,7 @@
 #include <scene.h>
 #include <renderer.h>
 #include <errors.h>
+#include <simulation.h>
 
 #include <new>
 
