@@ -22,9 +22,8 @@ class Bodies
 	void accelerate(void);
 	void move(void);
 	
+	int count=0;
 	private:
-	int count;
-	
 	int64_t xVelocity[50];
 	int64_t yVelocity[50];
 	int64_t xPosition[50];

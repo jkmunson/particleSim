@@ -15,11 +15,11 @@ Simulation::~Simulation()
 void Simulation::populateRenderingStack(std::stack<Sprite *> &renderingStack) 
 {
 	renderingStack.push( new Line(SDL_BLENDMODE_BLEND, Color{250,250,250,255}, 0, height, rendererRef.windowArea.w-2 , rendererRef.windowArea.h - height) );
-	if(count>3) {
+	if(bodies.count>3) {
 		SDL_Point *p;
 		int count;
 		bodies.print(&p,&count);
-		renderingStack.push( new Points(SDL_BLENDMODE_BLEND, Color{250,250,250,255}, p, count) );
+		renderingStack.push( new Points(SDL_BLENDMODE_BLEND, Color{250,250,250,255}, p,count) );
 	}
 }
 
@@ -36,6 +36,7 @@ void Simulation::updateInternalState(void)
 		
 		case SDL_MOUSEBUTTONDOWN:
 			bodies.create(100,100,event.button.x*1000, event.button.y*1000, 100);
+			printf("Created!\n");
 		break;
 		
 		case SDL_MOUSEMOTION:
@@ -47,7 +48,7 @@ void Simulation::updateInternalState(void)
 		break;
 		}
 	}
-	if(count>3) {
+	if(bodies.count>3) {
 	bodies.accelerate();
 	bodies.move();
 	}
