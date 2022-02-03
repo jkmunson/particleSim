@@ -28,7 +28,6 @@ void Scene::run(void)
 		sync.lock();
 		updateInternalState();
 		sync.unlock();
-		printf("Frame!\n");
 	}
 }
 

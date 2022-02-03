@@ -66,3 +66,19 @@ void Box::draw(SDL_Renderer *renderer)
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderDrawRect(renderer, &rect);
 }
+
+//######## Points
+Points::Points(SDL_BlendMode blendMode, Color c, SDL_Point *p, int ct)
+:Sprite(blendMode), color{c}, points{p}, count {ct}
+{}
+
+Points::~Points()
+{
+	free(points);
+}
+
+void Points::draw(SDL_Renderer *renderer)
+{
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderDrawPoints(renderer, points, count);
+}

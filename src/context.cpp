@@ -38,10 +38,11 @@ void Context::run(void)
 			activeScene.top()->nextScene = NULL;
 			activeScene.push(temp);
 			if(flushEvents()) return;
-			std::thread sceneThread([&](){activeScene.top()->run();});
+			sceneThread = std::thread([&](){activeScene.top()->run();});
 			printf("Scene Pushed\n");
-			while(1);
+			
 		}
+		
 		if(activeScene.top()->popScene) 
 		{
 			activeScene.top()->stop = true;
@@ -52,11 +53,8 @@ void Context::run(void)
 			if(flushEvents()) return;
 			std::thread sceneThread([&](){activeScene.top()->run();});
 		}
-		while(activeScene.top()->issim){};
-		printf("getting rendering stack\n");
-		std::cout << std::flush;
+		
 		activeScene.top()->getRenderingStack(renderingStack);
-		printf("Here\n got rendering stack\n");
 		rendererRef.drawScene(renderingStack);
 		rendererRef.swapFrameBuffer();
 		

@@ -73,6 +73,18 @@ class Box : public Sprite
 	
 };
 
+class Points: public Sprite
+{
+	public:
+	explicit Points(SDL_BlendMode blendMode, Color c, SDL_Point *p, int ct);
+	virtual ~Points();
+	virtual void draw(SDL_Renderer *renderer) override;
+	
+	Color color;
+	SDL_Point *points;
+	int count;
+};
+
 //TODO: This name is terrible. This class represents a texture to be rendered in whole or part to the window.
 /* A sprite that represents a subpart of a texture to render onto the screen. 
 class Figure : public Sprite
