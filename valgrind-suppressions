@@ -1,0 +1,10 @@
+# LibGLX has an "invalid read of size 8" that occurs when creating the SDL renderer. An exception is thrown/caught and GLX recovers, but valgrind notices. Only occurs for this specific driver.
+{
+   <SUPPRESS_MESA_DRIVER_ERROR_1>
+   Memcheck:Addr8
+   fun:strncmp
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0.0.0
+   ...
+}
+

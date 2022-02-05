@@ -81,6 +81,4 @@ void Points::draw(SDL_Renderer *renderer)
 {
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderDrawPoints(renderer, points, count);
-	//printf("Drawing Points\n");
-	printf("x %i : y % i\n", points[1].x, points[1].y);
 }

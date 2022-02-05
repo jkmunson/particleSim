@@ -9,12 +9,12 @@ void mutexQueue::lock(void)
 	}
 	//If we get here, then the lock was not able to be acquired directly
 	//Insert our own ticket at the back of the queue. When a thread finishes using the lock, it is required to 
-	std::atomic_flag ticket;; //Making an assumption that this on the stack is okay
-	ticket.clear();
+	std::atomic_bool ticket;; //Making an assumption that this on the stack is okay
+	ticket = false;
 	queue.push_back(&ticket);
 	queueLock.unlock(); 
 	
-	while(!ticket.test())
+	while(!ticket)
 	{
 		std::this_thread::yield();
 	}
@@ -32,7 +32,7 @@ void mutexQueue::unlock(void)
 	theLock.unlock();
 	if(!queue.empty())
 	{
-		queue.front()->test_and_set(); //Tell the waiting thread that the lock is available
+		*queue.front() = true; //Tell the waiting thread that the lock is available
 	}
 	queueLock.unlock();
 }

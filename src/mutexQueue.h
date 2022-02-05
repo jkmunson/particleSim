@@ -14,7 +14,7 @@ class mutexQueue
 	
 	private:
 	std::mutex queueLock;
-	std::deque<std::atomic_flag *> queue;
+	std::deque<std::atomic_bool *> queue;
 	std::mutex theLock;
 };
 

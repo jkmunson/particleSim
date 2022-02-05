@@ -6,6 +6,7 @@
 #include <errors.h>
 #include <stdint.h>
 #include <math.h>
+#include <cmath>
 
 #include <new>
 
@@ -24,11 +25,11 @@ class Bodies
 	
 	int count=0;
 	private:
-	int64_t xVelocity[50];
-	int64_t yVelocity[50];
-	int64_t xPosition[50];
-	int64_t yPosition[50];
-	int64_t gravParameter[50];
+	int64_t xVelocity[5000];
+	int64_t yVelocity[5000];
+	int64_t xPosition[5000];
+	int64_t yPosition[5000];
+	int64_t gravParameter[5000];
 };
 
 class Simulation : public Scene
