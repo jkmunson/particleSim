@@ -16,7 +16,7 @@ void Scene::delayFrameForDelta(void)
 	{
 		SDL_Delay((desiredDelta - currentDelta)/(SDL_GetPerformanceFrequency()/1000));
 	} else {
-		std::cout << "Frame Lagged\n";
+		std::cout << "Frame Lagged\n\n";
 	}
 	simFrameLast = SDL_GetPerformanceCounter();
 }

@@ -17,7 +17,7 @@ class Bodies
 	explicit Bodies(void);
 	~Bodies();
 	
-	void create(int64_t xvel, int64_t yvel, int64_t xpos, int64_t ypos, int64_t gravP);
+	void create(double xvel, double yvel, double xpos, double ypos, double gravP);
 	void print(SDL_Point ** points, int *cnt); //mallocs an array of points, size count, fills it with the points data, and then places that data at the pointers given.
 	
 	void accelerate(void);
@@ -25,11 +25,13 @@ class Bodies
 	
 	int count=0;
 	private:
-	int64_t xVelocity[5000];
-	int64_t yVelocity[5000];
-	int64_t xPosition[5000];
-	int64_t yPosition[5000];
-	int64_t gravParameter[5000];
+	double xVelocity[5000];
+	double yVelocity[5000];
+	double xPosition[5000];
+	double yPosition[5000];
+	double gravParameter[5000];
+	
+	bool isValid(int id);
 };
 
 class Simulation : public Scene

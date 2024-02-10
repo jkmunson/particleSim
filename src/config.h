@@ -15,8 +15,8 @@ class Config
 		//see https://wiki.libsdl.org/SDL_WindowFlags
 		//!No flag = windowed. Could also be SDL_WINDOW_BORDERLESS, SDL_WINDOW_FULLSCREEN etc. Should | in SDL_WINDOW_INPUT_GRABBED for fullscreen.
 		uint32_t windowType = 0;
-		uint32_t windowWidth = 2000;
-		uint32_t windowHeight = 1300;
+		uint32_t windowWidth = 1800;
+		uint32_t windowHeight = 900;
 	};
 	Video video;
 	
