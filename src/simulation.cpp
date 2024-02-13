@@ -39,7 +39,7 @@ void Simulation::updateInternalState(void)
 		
 		case SDL_MOUSEBUTTONDOWN:
 			if(event.button.button == SDL_BUTTON_LEFT)
-				bodies.create(0,0,event.button.x*100000, event.button.y*100000, 5000000000);
+				bodies.create(0,0,event.button.x*100000, event.button.y*100000, 50000000000);
 			if(event.button.button == SDL_BUTTON_RIGHT)
 				bodies.create(0,140,event.button.x*100000, event.button.y*100000, 40000000);
 		break;
